@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import resultData from "../assets/data.json";
+</script>
 
 <template>
   <div class="main-container">
@@ -21,21 +23,25 @@
       <div class="container-inner summary">
         <h2 class="summary-title">Summary</h2>
         <div class="summary-details">
-          <div class="detail detail-reaction">
-            <p class="detail-caption detail-reaction-cap">Reaction</p>
-            <p class="detail-score"><strong>80</strong> /100</p>
-          </div>
-          <div class="detail detail-memory">
-            <p class="detail-caption detail-memory-cap">Memory</p>
-            <p class="detail-score"><strong>92</strong> /100</p>
-          </div>
-          <div class="detail detail-verbal">
-            <p class="detail-caption detail-verbal-cap">Verbal</p>
-            <p class="detail-score"><strong>61</strong> /100</p>
-          </div>
-          <div class="detail detail-visual">
-            <p class="detail-caption detail-visual-cap">Visual</p>
-            <p class="detail-score"><strong>72</strong> /100</p>
+          <div
+            v-for="data in resultData"
+            :class="`detail detail-${data.category}`"
+          >
+            <div class="detail-inner">
+              <img
+                :src="`${data.icon}`"
+                alt=""
+                aria-hidden="true"
+                width="24"
+                height="24"
+              />
+              <p :class="`detail-category detail-${data.category}-cap`">
+                {{ data.category }}
+              </p>
+            </div>
+            <p class="detail-score">
+              <strong>{{ data.score }}</strong> /100
+            </p>
           </div>
         </div>
         <a class="btn-continue" href="#">Continue</a>
@@ -54,7 +60,7 @@ a {
 }
 
 .result-container {
-  background: linear-gradient(hsl(252, 100%, 67%), hsl(241, 81%, 54%));
+  background: linear-gradient(hsl(0deg 0% 17.39%), hsl(241deg 17.15% 27.54%));
   color: var(--white);
   text-align: center;
   border-radius: 0 0 3rem 3rem;
@@ -81,15 +87,7 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(hsla(256, 72%, 46%, 1), hsla(241, 72%, 46%, 0));
-}
-
-.result-score {
-  font-size: 3.5rem;
-  font-weight: 800;
-}
-
-.result-lead {
+  background: linear-gradient(hsl(254deg 8.66% 30.55%), hsl(0deg 0% 100% / 0%));
   font-size: 1rem;
   color: var(--light-lavender);
 }
@@ -125,8 +123,15 @@ a {
   color: var(--dark-gray-blue);
 }
 
-.detail-caption {
+.detail-category {
+  text-transform: capitalize;
   font-weight: 700;
+}
+
+.detail-inner {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }
 
 .detail-reaction {
@@ -155,25 +160,6 @@ a {
   color: var(--cobalt-blue);
 }
 
-.detail-caption::before {
-  margin-right: 0.5rem;
-  position: relative;
-  top: 5px;
-}
-
-.detail-reaction-cap::before {
-  content: url("../assets/icon-reaction.svg");
-}
-.detail-memory-cap::before {
-  content: url("../assets/icon-memory.svg");
-}
-.detail-verbal-cap::before {
-  content: url("../assets/icon-verbal.svg");
-}
-.detail-visual-cap::before {
-  content: url("../assets/icon-visual.svg");
-}
-
 strong {
   font-weight: 800;
 }
@@ -182,16 +168,17 @@ strong {
   text-align: center;
   background-color: var(--dark-gray-blue);
   color: var(--white);
-  padding: 1rem;
+  padding: 0.85rem;
   border-radius: 15em;
 }
 
 .btn-continue:hover {
-  background-color: var(--cobalt-blue);
+  opacity: 0.8;
   cursor: pointer;
+  transition: all 0.5s ease;
 }
 
-@media (width>=1024px) {
+@media (width>=768px) {
   main {
     min-height: 100vh;
     place-content: center;
@@ -204,27 +191,58 @@ strong {
   }
 
   .container-inner {
-    max-width: 340px;
-    height: auto;
-    padding: 2.25rem;
+    max-width: 23.0781rem;
+    height: 32rem;
+    padding: 2.85rem;
+    justify-content: space-between;
   }
 
   .result-container {
     border-radius: 3rem;
   }
 
+  .result-title {
+    font-size: 1.5rem;
+  }
+
+  .result-msg-title {
+    font-size: 2rem;
+  }
+
+  .result-msg-lead {
+    font-size: 1.15rem;
+    margin: 0.3rem;
+  }
+
   .result-score {
     font-size: 4rem;
+    font-weight: 800;
   }
 
   .result {
-    height: 490px;
+    height: 32rem;
   }
 
   .result-circle {
     width: 12rem;
     height: 12rem;
     line-height: 3.5rem;
+  }
+
+  .summary-details {
+    padding: 1rem 0;
+  }
+
+  .summary-title {
+    font-size: 1.5rem;
+  }
+
+  .detail-category {
+    font-size: 1.1rem;
+  }
+
+  .detail {
+    padding: 0.9rem;
   }
 }
 </style>
