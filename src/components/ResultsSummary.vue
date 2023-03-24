@@ -24,23 +24,23 @@ import resultData from "../assets/data.json";
         <h2 class="summary-title">Summary</h2>
         <div class="summary-details">
           <div
-            v-for="data in resultData"
-            :class="`detail detail-${data.category}`"
+            v-for="{ category, score, icon } in resultData"
+            :class="`detail detail-${category}`"
           >
             <div class="detail-inner">
               <img
-                :src="`${data.icon}`"
+                :src="`${icon}`"
                 alt=""
                 aria-hidden="true"
                 width="24"
                 height="24"
               />
-              <p :class="`detail-category detail-${data.category}-cap`">
-                {{ data.category }}
+              <p :class="`detail-category detail-${category}-cap`">
+                {{ category }}
               </p>
             </div>
             <p class="detail-score">
-              <strong>{{ data.score }}</strong> /100
+              <strong>{{ score }}</strong> /100
             </p>
           </div>
         </div>
